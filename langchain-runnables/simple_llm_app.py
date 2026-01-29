@@ -8,7 +8,8 @@ load_dotenv()
 llm = HuggingFaceEndpoint(
     repo_id="deepseek-ai/DeepSeek-V3.2",
     task="text-generation"
-) #type : ignore
+)  # type: ignore
+
 model = ChatHuggingFace(llm = llm)
 
 # Create a Prompt Template
