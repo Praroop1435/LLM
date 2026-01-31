@@ -1,18 +1,22 @@
+from dotenv import load_dotenv
+import os
+
 from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
 from langchain_core.prompts import PromptTemplate
-from dotenv import load_dotenv
 
+# Load env
 load_dotenv()
+assert os.getenv("HF_TOKEN"), "HF_TOKEN not found"
 
-# Initialize the LLM
+# Initialize MiniMax via HF Inference
 llm = HuggingFaceEndpoint(
-    repo_id="deepseek-ai/DeepSeek-V3.2",
-    task="text-generation"
+    repo_id="MiniMaxAI/MiniMax-M2.1",
+    task="text-generation",
 )  # type: ignore
 
-model = ChatHuggingFace(llm = llm)
+model = ChatHuggingFace(llm=llm)
 
-# Create a Prompt Template
+# Prompt template
 prompt = PromptTemplate(
     input_variables=["topic"],
     template="Suggest a catchy blog title about {topic}."
@@ -21,7 +25,7 @@ prompt = PromptTemplate(
 # Format prompt
 formatted_prompt = prompt.format(topic="Cricket")
 
-# Call the LLM
-blog_title = model.invoke(formatted_prompt)
+# Invoke model
+response = model.invoke(formatted_prompt)
 
-print("Generated Blog Title:", blog_title)
+print("Generated Blog Title:", response.content)
