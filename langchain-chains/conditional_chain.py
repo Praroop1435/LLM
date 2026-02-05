@@ -51,8 +51,8 @@ classifier_chain = prompt1 | model | py_parser
 
 
 branch_chain = RunnableBranch(
-    (lambda x:x.sentiment == "positive", prompt2 | model | parser),
-    (lambda x:x.sentiment == "negative", prompt3 | model | parser),
+    (lambda x: x.sentiment == "positive", prompt2 | model | parser), #type: ignore
+    (lambda x: x.sentiment == "negative", prompt3 | model | parser), #type: ignore
     RunnableLambda(lambda x: "could not find the sentiment")
 )
 
@@ -63,5 +63,6 @@ chain = classifier_chain | branch_chain
 result = chain.invoke({'feedback':'The laptop is terrible'})
 
 print(result)
+
 chain.get_graph().print_ascii()
 

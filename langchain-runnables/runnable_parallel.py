@@ -48,3 +48,4 @@ parallel_chain = RunnableParallel({
 
 result = parallel_chain.invoke({"topic":"AI"})
 print(result)
+

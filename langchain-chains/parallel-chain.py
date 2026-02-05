@@ -25,18 +25,17 @@ prompt3 = PromptTemplate(
 llm1 = HuggingFaceEndpoint(
     repo_id="meta-llama/Llama-3.1-8B-Instruct",
     task="text-generation"
-)
+) # type: ignore
 
 llm2 = HuggingFaceEndpoint(
     repo_id='deepseek-ai/DeepSeek-V3.2',
     task='text-generation'
-)
+) # type: ignore
 
 model1 = ChatHuggingFace(llm=llm1)
 model2 = ChatHuggingFace(llm=llm2)
 
 parser = StrOutputParser()
-
 
 parallel_chain = RunnableParallel({
     'notes' : prompt1 | model1 | parser,
